@@ -1,0 +1,35 @@
+.wotdCard {
+  position: absolute;
+  top: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 800px;
+}
+
+.dailyWord {
+  position: absolute;
+  width: 800px;
+  height: 150px;
+
+  top: 0;
+
+  padding: 0 40px;
+
+  background: #1c2228;
+  box-shadow: 16px 16px 10px rgba(0, 0, 0, 0.25),
+    -16px -16px 10px rgba(255, 255, 255, 0.1);
+  border-radius: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font-size: 40px;
+}
+
+.chevronUp {
+  position: absolute;
+  left: calc(400px - 33px);
+  top: 200px;
+}
