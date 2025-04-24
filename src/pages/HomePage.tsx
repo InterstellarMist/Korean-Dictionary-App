@@ -10,18 +10,19 @@ const Home = () => {
     <div className="container flex-column">
       <div
         className="container flex-column"
-        style={{ width: 500, height: 500, position: 'relative' }}
+        style={{ width: 500, height: 500, position: 'relative' }
+        }
       >
-        <Logo styles={{ width: 500, top: '20%', position: 'absolute' }} />
+        <Logo styles={{ width: 500, position: 'relative' }} />
         <Search setToggle={setToggle} styles={{
-          top: '60%',
+          top: '5%',
           maxWidth: '800px',
           minWidth: '500px',
-          position: 'absolute',
+          position: 'relative',
           width: 'calc(100vw - 200px)',
         }} />
-        {toggle && <Wotd />}
       </div>
+      {toggle && <Wotd />}
     </div>
   );
 };

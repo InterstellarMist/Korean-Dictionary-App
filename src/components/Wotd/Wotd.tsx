@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useTransition, animated } from '@react-spring/web';
+import { AnimatePresence, motion } from 'motion/react';
 import debounce from 'lodash.debounce';
 import chevronUp from '../../assets/chevronUp.svg';
 import styles from './Wotd.module.scss';
@@ -7,25 +7,26 @@ import styles from './Wotd.module.scss';
 const Wotd = () => {
   const [toggle, setToggle] = useState(false);
 
-  const transitions = useTransition(toggle, {
-    from: { opacity: 0, transform: 'translateY(20px)' },
-    enter: { opacity: 1, transform: 'translateY(0)' },
-    leave: { opacity: 0, transform: 'translateY(20px)' },
-  });
-
   const handleClick = useMemo(() => debounce(
-    () => setToggle((prev) => !prev), 300
+    () => setToggle((prev) => !prev), 100
   ), []);
 
   return (
     <div className={styles.wotdCard} onClick={handleClick}>
-      <img className={styles.chevronUp} src={chevronUp} alt="up" />
-      {transitions((style, item) => (item &&
-        <animated.div className={styles.dailyWord} style={style}>
+      <AnimatePresence>
+        {toggle && <motion.div
+          className={styles.dailyWord}
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 100 }}
+          transition={{ duration: 0.200 }}
+        >
           Word of the day
           <div>도시 = city</div>
-        </animated.div>
-      ))}
+        </motion.div>
+        }
+      </AnimatePresence>
+      <img className={styles.chevronUp} src={chevronUp} alt="up" />
     </div>
   );
 };

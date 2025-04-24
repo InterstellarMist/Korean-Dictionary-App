@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { motion } from 'motion/react';
 import logo from '../../assets/korean dictionary logo.png'
 
 export interface LogoProps {
@@ -8,7 +9,14 @@ export interface LogoProps {
 const Logo = ({ styles }: LogoProps) => {
   return (
     <Link to="/" style={{ ...styles }} tabIndex={-1}>
-      <img src={logo} alt="logo" style={{ ...styles }} />
+      <motion.img
+        layoutId="logo"
+        src={logo}
+        alt="logo"
+        style={{ ...styles }}
+        // transition={{ duration: 0.25 }}
+        transition={{ duration: 0.25, type: 'spring', mass: 1, stiffness: 300 }}
+      />
     </Link>
   )
 };

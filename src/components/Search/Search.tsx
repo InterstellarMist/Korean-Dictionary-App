@@ -6,12 +6,15 @@ import {
   SetStateAction,
 } from 'react';
 import { useNavigate } from 'react-router';
+import { motion } from 'motion/react';
+
 import { useWordStore } from '../../store/wordStore';
-import searchIcon from '../../assets/search.svg';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 import { useClickOutside } from '../../hooks/useClickOutside';
-import searchStyles from './Search.module.scss';
 import { sanitizeInput } from '../../utils/inputValidation';
+
+import searchIcon from '../../assets/search.svg';
+import searchStyles from './Search.module.scss';
 
 export interface SearchProps {
   setToggle?: Dispatch<SetStateAction<boolean>>;
@@ -46,21 +49,23 @@ const Search = ({ setToggle, styles }: SearchProps) => {
   };
 
   // Custom keyboard navigation hook
+  const unfocusSearch = () => {
+    setDropdown(false);
+    clearResults();
+    setSearch('');
+  };
+
   const {
     inputRef: inputRef,
     resultRefs: resultRefs,
     handleResultKeyDown,
     handleInputKeyDown,
-  } = useKeyboardNavigation<HTMLDivElement>(results.length, onSelect);
+  } = useKeyboardNavigation<HTMLDivElement>(results.length, onSelect, unfocusSearch);
 
   // Outside click custom hook
   const searchBarRef = useRef<HTMLDivElement>(null);
 
-  useClickOutside(searchBarRef, () => {
-    setDropdown(false);
-    clearResults();
-    setSearch('');
-  });
+  useClickOutside(searchBarRef, unfocusSearch);
 
   // Input validation and data fetching
   const handleChange = useCallback(
@@ -86,8 +91,14 @@ const Search = ({ setToggle, styles }: SearchProps) => {
   );
 
   return (
-    <div className={searchStyles.searchBar} ref={searchBarRef} style={{ ...styles }}>
-      <div className={searchStyles.searchTop}>
+    <motion.div
+      layoutId="search-bar"
+      className={searchStyles.searchBar}
+      ref={searchBarRef}
+      style={{ ...styles, borderRadius: '50px' }}
+      transition={{ duration: 0.25, type: 'spring', mass: 0.75, stiffness: 100 }}
+    >
+      <motion.div layout className={searchStyles.searchTop}>
         <img className={searchStyles.searchIcon} src={searchIcon} alt="search" />
         <input
           className={searchStyles.searchInput}
@@ -100,10 +111,10 @@ const Search = ({ setToggle, styles }: SearchProps) => {
           autoComplete="false"
           autoCorrect="off"
         />
-      </div>
+      </motion.div>
       {
         dropdown && (
-          <div className={searchStyles.searchBottom}>
+          <motion.div className={searchStyles.searchBottom}>
             {results.map((word, i) => {
               return (
                 <div
@@ -120,10 +131,10 @@ const Search = ({ setToggle, styles }: SearchProps) => {
               );
             })}
             {results.length === 0 && search && <p>no search result</p>}
-          </div>
+          </motion.div>
         )
       }
-    </div >
+    </motion.div >
   );
 };
 

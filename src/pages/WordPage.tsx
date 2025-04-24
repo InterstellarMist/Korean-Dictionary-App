@@ -1,3 +1,4 @@
+import { motion } from 'motion/react';
 import Search from '../components/Search/Search';
 import WordCard from '../components/WordCard/WordCard';
 import Logo from '../components/Logo/Logo';
@@ -6,8 +7,12 @@ const WordPage = () => {
   return (
     <>
       <div style={{
-        position: 'relative', display: 'flex', width: '100%',
-        height: '80px', margin: '50px 0 50px 50px', boxSizing: 'content-box'
+        position: 'relative',
+        display: 'flex',
+        width: '100%',
+        height: '80px',
+        margin: '50px 0 50px 50px',
+        boxSizing: 'content-box',
       }}>
         <Logo styles={{ height: 80, top: '0%', position: 'relative' }} />
         <Search
@@ -20,7 +25,16 @@ const WordPage = () => {
           }}
         />
       </div>
-      <WordCard />
+      <motion.div
+        initial={{ opacity: 0, y: 700 }}
+        animate={{ opacity: 1, y: 0 }}
+        // exit={{ opacity: 0, y: 700 }}
+        // transition={{ duration: 0.25 }}
+        transition={{ duration: 0.25, type: 'spring', mass: 1, stiffness: 100 }}
+        className="container"
+      >
+        <WordCard />
+      </motion.div >
     </>
   );
 };

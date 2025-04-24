@@ -2,7 +2,8 @@ import { useRef, useState } from 'react'
 
 export function useKeyboardNavigation<T extends HTMLElement>(
   resultsLen: number,
-  onSelect: (index: number) => void
+  onSelect: (index: number) => void,
+  unfocusSearch: () => void,
 ) {
   const [focusedIndex, setFocusedIndex] = useState(-1); // -1 is search, [0->N-1] result index
   const inputRef = useRef<(HTMLInputElement | null)>(null);
@@ -24,6 +25,9 @@ export function useKeyboardNavigation<T extends HTMLElement>(
         setFocusedIndex(0);
         focusIndex(0);
       }
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      unfocusSearch();
     }
   }
 
@@ -46,6 +50,9 @@ export function useKeyboardNavigation<T extends HTMLElement>(
     } else if (e.key === 'Enter') {
       e.preventDefault();
       onSelect(index);
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      unfocusSearch();
     }
   }
 
