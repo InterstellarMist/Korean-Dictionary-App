@@ -66,19 +66,6 @@ This app requires a separate REST API server connected to a MongoDB database.
 - `/public` — Static assets
 - `/readme` — Sample images for documentation
 
-## Screenshots
-
-See `/readme/` for sample images.
-
----
-
-Let me know if you want to include:
-
-- Backend API documentation or example server code
-- Contribution guidelines
-- License information
-- More detailed usage instructions
-
 ## Contributing
 
 Contributions are welcome! Please open issues or pull requests for suggestions and improvements.
